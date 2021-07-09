@@ -1,8 +1,8 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
 import React from "react";
 
-import AppBar from "./AppBar";
-import Main from "./Main";
+import AppBar from "./containers/AppBar";
+import Main from "./containers/main";
 
 const App = () => {
   return (
