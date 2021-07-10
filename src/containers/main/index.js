@@ -8,7 +8,7 @@ import Statistics from "./Statistics";
 const Example = () => {
   return (
     <>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} style={{ padding: 12 }}>
         <Grid item xs={12} md={6}>
           <Form />
         </Grid>

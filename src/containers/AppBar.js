@@ -6,6 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
+import { Link as RouteLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    alignContent: "left",
   },
 }));
 
@@ -34,10 +36,14 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            {process.env.REACT_APP_NAME}
-          </Typography>
-          <Button color="inherit">Login</Button>
+          <RouteLink to="/" className={classes.title}>
+            <Typography variant="h6" component="a">
+              {process.env.REACT_APP_NAME}
+            </Typography>
+          </RouteLink>
+          <Button component={RouteLink} to="/login" color="inherit">
+            登录
+          </Button>
         </Toolbar>
       </AppBar>
     </div>

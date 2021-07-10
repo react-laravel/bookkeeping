@@ -30,7 +30,7 @@ const Form = () => {
   };
 
   return (
-    <Grid container spacing={1} style={{ margin: 12 }}>
+    <Grid container spacing={1}>
       <Grid item xs={12}>
         <h2>表单</h2>
       </Grid>

@@ -1,0 +1,14 @@
+/* 更改默认行为 a start */
+a:visited {
+  color: unset;
+}
+
+a:link {
+  color: unset;
+  text-decoration: none;
+}
+
+a:hover {
+  color: unset;
+}
+/* 更改默认行为 a end */

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import AppBar from "../containers/AppBar";
 import Login from "../containers/Login";
 import Main from "../containers/main";
 
@@ -30,6 +31,7 @@ const routes = [
 export default function RouteConfigExample() {
   return (
     <Router>
+      <AppBar />
       <Switch>
         {routes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
