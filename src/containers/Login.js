@@ -1,119 +1,139 @@
-import axios from "axios";
-import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import React, { useCallback } from "react";
+import { useHistory } from "react-router-dom";
+import { useImmer } from "use-immer";
 
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:8000/api/auth";
+import { logged } from "../helpers";
+import axios from "../instances/axios";
 
-function App() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="/">
+        记账本
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    axios
-      .post("register", {
-        name: name,
-        email: email,
-        password: password,
-      })
-      .then((response) => {});
-  };
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+export default function SignIn() {
+  const classes = useStyles();
+  const history = useHistory();
+
+  const [user, setUser] = useImmer({
+    email: undefined,
+    password: undefined,
+    remember_me: undefined,
+  });
+
+  const handleChange = useCallback(
+    (e, name) => {
+      setUser((draft) => {
+        draft[name] = e.target.value;
+      });
+    },
+    [setUser]
+  );
 
   const handleLogin = (e) => {
     e.preventDefault();
     axios
-      .post("login", {
-        email: email,
-        password: password,
-      })
+      .post("auth/login", user)
       .then((response) => {
-        if (response.status === 200) {
-          alert("登录成功");
-        }
+        console.log(response);
+        logged(response.data);
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
-  const handleCredentialsTest = () => {
-    setName("233");
-    setEmail("233@233.com");
-    setPassword("123456");
-  };
-
-  const handleUser = () => {
-    axios.get("user").then((resp) => {});
-  };
-
   return (
-    <>
-      <div>
-        <form onSubmit={(e) => handleRegister(e)}>
-          <label>
-            昵称：
-            <input
-              name="name"
-              type="text"
-              value={name}
-              placeholder="请输入昵称"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </label>
-          <label>
-            邮箱：
-            <input
-              name="email"
-              type="text"
-              value={email}
-              placeholder="请输入邮箱"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            密码：
-            <input
-              name="password"
-              type="password"
-              value={password}
-              placeholder="请输入密码"
-              autoComplete="off"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-          <input type="submit" value="注册" />
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="邮箱地址"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={(e) => handleChange(e, "email")}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="密码"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(e) => handleChange(e, "password")}
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="记住我"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleLogin}
+          >
+            登录
+          </Button>
         </form>
       </div>
-      <div>
-        <form onSubmit={(e) => handleLogin(e)}>
-          <label>
-            邮箱：
-            <input
-              name="email"
-              type="text"
-              value={email}
-              placeholder="请输入邮箱"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            密码：
-            <input
-              name="password"
-              type="password"
-              value={password}
-              placeholder="请输入密码"
-              autoComplete="off"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-          <input type="submit" value="登录" />
-        </form>
-      </div>
-      <div>
-        <button onClick={handleCredentialsTest}>一键填入测试数据</button>
-        <button onClick={handleUser}>获取用户信息</button>
-      </div>
-    </>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
   );
 }
-
-export default App;

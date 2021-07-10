@@ -58,9 +58,11 @@ export default function ButtonAppBar() {
                 {process.env.REACT_APP_NAME}
               </Typography>
             </RouteLink>
-            <Button component={RouteLink} to="/login" color="inherit">
-              登录
-            </Button>
+            {localStorage.userName || (
+              <Button component={RouteLink} to="/login" color="inherit">
+                登录
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
       </div>
