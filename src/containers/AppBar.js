@@ -8,6 +8,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
 import { Link as RouteLink } from "react-router-dom";
 
+import Drawer from "./Drawer";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -24,28 +26,45 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpen(!open);
+  };
+
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <RouteLink to="/" className={classes.title}>
-            <Typography variant="h6" component="a">
-              {process.env.REACT_APP_NAME}
-            </Typography>
-          </RouteLink>
-          <Button component={RouteLink} to="/login" color="inherit">
-            登录
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer}
+            >
+              <MenuIcon />
+            </IconButton>
+            <RouteLink to="/" className={classes.title}>
+              <Typography variant="h6" component="a">
+                {process.env.REACT_APP_NAME}
+              </Typography>
+            </RouteLink>
+            <Button component={RouteLink} to="/login" color="inherit">
+              登录
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+      <Drawer toggleDrawer={toggleDrawer} open={open} />
+    </>
   );
 }

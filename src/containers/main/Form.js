@@ -1,8 +1,9 @@
 import Grid from "@material-ui/core/Grid";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import axios from "axios";
 import React, { useCallback } from "react";
 import { useImmer } from "use-immer";
+
+import axios from "../../instances/axios";
 
 const Form = () => {
   const [bill, setBill] = useImmer({
@@ -23,8 +24,7 @@ const Form = () => {
   );
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post("/", bill).then((resp) => {
+    axios.post("/bills", bill).then((resp) => {
       console.log(resp);
     });
   };
