@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { logout } from "../helpers";
+
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: { "Content-Type": "application/json" },
@@ -43,19 +45,24 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log(error.response);
     if (error.response) {
-      if (error.response.config.url === "/user/logout") {
+      if (error.response.config.url === "/auth/logout") {
         return error;
       }
 
       switch (error.response.status) {
         case 400:
+          alert(400);
           break;
         case 401: {
+          logout();
           break;
         }
-        case 422:
+        case 403: {
+          alert(403);
           break;
+        }
         default:
       }
     }

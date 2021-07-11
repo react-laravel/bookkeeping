@@ -31,11 +31,11 @@ export const logged = (data) => {
  * 注销
  */
 export const logout = () => {
-  localStorage.removeItem("token");
   localStorage.removeItem("userId");
   localStorage.removeItem("userName");
   localStorage.removeItem("userEmail");
-  localStorage.removeItem("access_token_expired_at");
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("accessTokenExpiredAt");
 };
 
 /**

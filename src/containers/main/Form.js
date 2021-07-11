@@ -1,5 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { useSnackbar } from "notistack";
 import React, { useCallback } from "react";
 import { useImmer } from "use-immer";
 
@@ -14,6 +15,8 @@ const Form = () => {
     note: "",
   });
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleChange = useCallback(
     (e, name) => {
       setBill((draft) => {
@@ -24,9 +27,22 @@ const Form = () => {
   );
 
   const handleSubmit = (e) => {
-    axios.post("/bills", bill).then((resp) => {
-      console.log(resp);
-    });
+    axios
+      .post("/bills", bill)
+      .then((resp) => {
+        alert("添加成功");
+      })
+      .catch((error) => {
+        if (error.status === 422) {
+          for (const value in error.data.errors) {
+            if (error.data.errors.hasOwnProperty(value)) {
+              enqueueSnackbar(error.data.errors[value][0], {
+                variant: "error",
+              });
+            }
+          }
+        }
+      });
   };
 
   return (
