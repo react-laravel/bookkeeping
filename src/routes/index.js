@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AppBar from "../containers/AppBar";
+import Avg from "../containers/Avg";
+import Bills from "../containers/bills";
 import Login from "../containers/Login";
 import Main from "../containers/main";
 
@@ -15,6 +17,16 @@ const routes = [
     path: "/login",
     exact: true,
     component: Login,
+  },
+  {
+    path: "/bills",
+    exact: true,
+    component: Bills,
+  },
+  {
+    path: "/avg",
+    exact: true,
+    component: Avg,
   },
   {
     path: "/login/test3",

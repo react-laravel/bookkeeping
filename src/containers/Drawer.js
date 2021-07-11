@@ -5,6 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import MoneyIcon from "@material-ui/icons/Money";
 import React from "react";
@@ -37,6 +38,14 @@ export default function TemporaryDrawer(props) {
                 <MoneyIcon />
               </ListItemIcon>
               <ListItemText primary="账单" />
+            </ListItem>
+          </List>
+          <List>
+            <ListItem button component={RouteLink} to="avg">
+              <ListItemIcon>
+                <AttachMoneyIcon />
+              </ListItemIcon>
+              <ListItemText primary="月平均" />
             </ListItem>
           </List>
           <Divider />

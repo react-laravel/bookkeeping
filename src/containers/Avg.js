@@ -7,39 +7,32 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 
-import axios from "../../instances/axios";
+import axios from "../instances/axios";
 
-export default function List() {
-  const [bills, setBills] = React.useState([]);
-
+const Statistics = () => {
+  const [avg, setAvg] = React.useState([]);
   React.useEffect(() => {
-    axios.get("/bills").then(({ data }) => {
-      setBills(data);
+    axios.get("/avg").then(({ data }) => {
+      setAvg(data);
     });
   }, []);
 
   return (
     <div>
-      <h2>近期账单</h2>
+      <h2>月平均</h2>
       <TableContainer component={Paper}>
-        <Table style={{ minWidth: 500 }}>
+        <Table>
           <TableHead>
             <TableRow>
-              <TableCell>名称</TableCell>
+              <TableCell>年月</TableCell>
               <TableCell>金额</TableCell>
-              <TableCell>开始年月</TableCell>
-              <TableCell>结束年月</TableCell>
-              <TableCell>备注</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {bills.map((row) => (
+            {avg.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.month}</TableCell>
                 <TableCell>{row.money}</TableCell>
-                <TableCell>{row.startDate}</TableCell>
-                <TableCell>{row.endDate}</TableCell>
-                <TableCell>{row.note}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -47,4 +40,6 @@ export default function List() {
       </TableContainer>
     </div>
   );
-}
+};
+
+export default Statistics;
