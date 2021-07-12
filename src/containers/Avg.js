@@ -11,6 +11,7 @@ import axios from "../instances/axios";
 
 const Statistics = () => {
   const [avg, setAvg] = React.useState([]);
+
   React.useEffect(() => {
     axios.get("/avg").then(({ data }) => {
       setAvg(data);

@@ -24,7 +24,7 @@ export const logged = (data) => {
   localStorage.accessToken = accessToken;
   localStorage.accessTokenExpiredAt = dayjs().unix() + data.expires_in;
 
-  axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 };
 
 /**

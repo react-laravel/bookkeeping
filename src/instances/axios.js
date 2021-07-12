@@ -9,8 +9,8 @@ const instance = axios.create({
 });
 
 instance.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-if (localStorage.token) {
-  instance.defaults.headers.common.Authorization = localStorage.token;
+if (localStorage.accessToken) {
+  instance.defaults.headers.common.Authorization = `Bearer ${localStorage.accessToken}`;
 }
 
 instance.interceptors.request.use(
