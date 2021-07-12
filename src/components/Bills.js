@@ -27,8 +27,8 @@ const BillsList = (props) => {
               <TableCell>{bill.name}</TableCell>
               <TableCell>{bill.money}</TableCell>
               <TableCell>{bill.avg}</TableCell>
-              <TableCell>{bill.startDate}</TableCell>
-              <TableCell>{bill.endDate}</TableCell>
+              <TableCell>{bill.start_date}</TableCell>
+              <TableCell>{bill.end_date}</TableCell>
               <TableCell>{bill.note}</TableCell>
             </TableRow>
           ))}

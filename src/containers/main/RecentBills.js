@@ -7,7 +7,7 @@ export default function RecentBills() {
   const [bills, setBills] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get("/bills").then(({ data }) => {
+    axios.get("/bills?size=5").then(({ data }) => {
       setBills(data);
     });
   }, []);
