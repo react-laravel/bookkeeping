@@ -1,4 +1,6 @@
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
+import Switch from "@material-ui/core/Switch";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { useSnackbar } from "notistack";
 import React, { useCallback } from "react";
@@ -10,9 +12,10 @@ const Form = () => {
   const [bill, setBill] = useImmer({
     name: "",
     money: undefined,
-    startDate: undefined,
-    endDate: undefined,
+    start_date: undefined,
+    end_date: undefined,
     note: "",
+    is_renewal: 0,
   });
 
   const { enqueueSnackbar } = useSnackbar();
@@ -20,7 +23,11 @@ const Form = () => {
   const handleChange = useCallback(
     (e, name) => {
       setBill((draft) => {
-        draft[name] = e.target.value;
+        if (name === "is_renewal") {
+          draft[name] = e.target.checked;
+        } else {
+          draft[name] = e.target.value;
+        }
       });
     },
     [setBill]
@@ -48,7 +55,7 @@ const Form = () => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <h2>表单</h2>
+        <h2>新增账单</h2>
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={1}>
@@ -87,15 +94,15 @@ const Form = () => {
       <Grid item xs={12}>
         <Grid container spacing={1}>
           <Grid item style={{ width: 100 }}>
-            <label htmlFor="startDate">开始年月</label>
+            <label htmlFor="start_date">开始年月</label>
           </Grid>
           <Grid item xs>
             <input
               type="month"
-              name="startDate"
-              value={bill.startDate}
+              name="start_date"
+              value={bill.start_date}
               required
-              onChange={(e) => handleChange(e, "startDate")}
+              onChange={(e) => handleChange(e, "start_date")}
             />
           </Grid>
         </Grid>
@@ -103,15 +110,38 @@ const Form = () => {
       <Grid item xs={12}>
         <Grid container spacing={1}>
           <Grid item style={{ width: 100 }}>
-            <label htmlFor="endDate">开始年月</label>
+            <label htmlFor="end_date">结束年月</label>
           </Grid>
           <Grid item xs>
             <input
               type="month"
-              name="endDate"
-              value={bill.endDate}
+              name="end_date"
+              value={bill.end_date}
               required
-              onChange={(e) => handleChange(e, "endDate")}
+              onChange={(e) => handleChange(e, "end_date")}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container spacing={1}>
+          <Grid item style={{ width: 100 }}>
+            <label htmlFor="note">是否续费</label>
+          </Grid>
+          <Grid item xs>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={bill.is_renewal}
+                  onChange={(e) => handleChange(e, "is_renewal")}
+                  color="primary"
+                />
+              }
+              label={
+                <span style={{ fontSize: "0.5rem" }}>
+                  没有明确结束时间，即按月续费的话，要勾选
+                </span>
+              }
             />
           </Grid>
         </Grid>

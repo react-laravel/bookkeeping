@@ -2,10 +2,10 @@ import { Grid } from "@material-ui/core";
 import React from "react";
 
 import Form from "./Form";
+import RecentAvg from "./RecentAvg";
 import RecentBills from "./RecentBills";
-import Statistics from "./Statistics";
 
-const Example = () => {
+const App = () => {
   return (
     <>
       <Grid container spacing={1} style={{ padding: 12 }}>
@@ -13,14 +13,14 @@ const Example = () => {
           <Form />
         </Grid>
         <Grid item xs={12} md={4}>
-          <RecentBills />
+          <RecentAvg />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Statistics />
+          <RecentBills />
         </Grid>
       </Grid>
     </>
   );
 };
 
-export default Example;
+export default App;
